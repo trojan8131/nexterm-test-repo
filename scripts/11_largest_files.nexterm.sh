@@ -3,46 +3,21 @@
 #description: Install Docker
 #icon: 📁
 
-@NEXTERM:STEP "🛠️ Updating package index..."
-sudo apt-get update -y
+for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-@NEXTERM:STEP "📦 Installing dependencies..."
-sudo apt-get install -y \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
-
-@NEXTERM:STEP "🔑 Adding Docker's official GPG key..."
-sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/$(. /etc/os-release && echo "$ID")/gpg \
-  | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-
-@NEXTERM:STEP "➕ Adding Docker repository..."
+# Add the repository to Apt sources:
 echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
-  https://download.docker.com/linux/$(. /etc/os-release && echo "$ID") \
-  $(lsb_release -cs) stable" \
-  | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
 
-@NEXTERM:STEP "🔄 Updating package index with Docker repo..."
-sudo apt-get update -y
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-@NEXTERM:STEP "🐳 Installing Docker Engine and CLI..."
-sudo apt-get install -y \
-    docker-ce \
-    docker-ce-cli \
-    containerd.io \
-    docker-buildx-plugin \
-    docker-compose-plugin
-
-@NEXTERM:STEP "🚀 Enabling and starting Docker service..."
-sudo systemctl enable docker
-sudo systemctl start docker
-
-@NEXTERM:STEP "👤 Adding user $(whoami) to docker group..."
-sudo usermod -aG docker $(whoami)
-
-@NEXTERM:TABLE "Docker Components Installed" "Component,Status" "\"docker-ce,✅ Installed\"\n\"docker-compose-plugin,✅ Installed\"\n\"Service,✅ Running\""
-
-@NEXTERM:STEP "✅ Docker installed! Please log out and back in to use docker without sudo."
+@NEXTERM:STEP "Docker installed! Please log out and back in to use docker without sudo."
