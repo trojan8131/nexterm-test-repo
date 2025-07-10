@@ -1,7 +1,7 @@
 #!/bin/bash
-#title: Docker
-#description: Install Docker
-#icon: 📁
+# @name: Install Docker
+# @description: Install Docker Engine and Docker Compose on Debian/Ubuntu.
+# @icon: 🐳
 
 for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
 # Add Docker's official GPG key:
