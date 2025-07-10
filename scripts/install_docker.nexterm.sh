@@ -1,6 +1,7 @@
 #!/bin/bash
-#title: Install Docker
-#description: Install Docker Engine
+#title: Docker
+#description: Install Docker
+#icon: 📁
 
 @NEXTERM:STEP "🛠️ Updating package index..."
 sudo apt-get update -y
