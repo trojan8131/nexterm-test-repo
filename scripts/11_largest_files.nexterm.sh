@@ -5,8 +5,9 @@
 
 @NEXTERM:STEP "🧹 Removing old Docker or Podman-related packages..."
 for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do
-  sudo apt-get remove -y $pkg
+  sudo apt-get remove -y "$pkg" || true
 done
+
 
 @NEXTERM:STEP "🔄 Updating package index and installing prerequisites..."
 sudo apt-get update -y
