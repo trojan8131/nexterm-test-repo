@@ -1,7 +1,6 @@
 #!/bin/bash
 #title: Install Docker
-#description: Install Docker Engine and CLI on Debian/Ubuntu-based systems.
-#icon: 🐳
+#description: Install Docker Engine
 
 @NEXTERM:STEP "🛠️ Updating package index..."
 sudo apt-get update -y
