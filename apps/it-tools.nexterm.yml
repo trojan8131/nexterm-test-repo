@@ -1,0 +1,15 @@
+services:
+  it-tools:
+    image: corentinth/it-tools:latest
+    container_name: it-tools
+    restart: unless-stopped
+    ports:
+      - 8080:80
+
+x-nexterm:
+  name: IT Tools
+  version: latest
+  description: "IT Tools is a web-based all-in-one toolbox for developers and sysadmins"
+  icon: https://raw.githubusercontent.com/gnmyt/Nexterm-AppStore/main/logos/UptimeKuma.png
+  category: Utilities
+  port: 8080
